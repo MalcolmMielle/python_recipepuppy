@@ -8,8 +8,22 @@ import urllib
 	
 #Global search
 def query(name='', ingredient='', page='1'):
+	#Handling lists
+	if isinstance(ingredient, list):
+		li=iter(ingredient)
+		obj=next(li)
+		ingredient_fin=str(obj)+', '
+		while True:
+			try:
+				ingredient_fin=ingredient_fin+str(obj)+', '
+				obj=next(li)
+			except StopIteration:
+				 ingredient_fin=ingredient_fin+str(obj)
+				 break
+	else :
+		ingredient_fin=ingredient
 	try:
-		r = requests.get("http://www.recipepuppy.com/api/?", params={'i':ingredient, "q":name, "p":page}).json()
+		r = requests.get("http://www.recipepuppy.com/api/?", params={'i':ingredient_fin, "q":name, "p":page}).json()
 		return r
 	except urllib2.URLError, exception_variable:
 		#prints the reason for failure out to help debugging
