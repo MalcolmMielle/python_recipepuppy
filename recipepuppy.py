@@ -7,6 +7,10 @@ import urllib
 import string
 import re
 
+class Recipe(object):
+	def __init__(self, dict_in):
+		self.data=dict_in
+
 def clean():
     """Contrôle le temps mis par une fonction pour s'exécuter.
     Si le temps d'exécution est supérieur à nb_secs, on affiche une alerte"""
@@ -79,6 +83,18 @@ def get_clean_ingredient(name):
 @clean()
 def get_clean_recipe(name):
 	return get_recipe(name)
+
+#Make it a dictionnary
+def get_full_info(name='', ingredient='', page='1'):
+	results=query(name,ingredient, page)
+	#Need to create a dict with all info
+	all=dict()
+	i=0
+	while i<len(results['results']):
+		all[results['results'][i]['title']]=results['results'][i]['ingredients']
+		#all[results['results'][i]['title']].append(results['results'][i]['href'])
+		i=i+1
+	return Recipe(all)
 
 	
 

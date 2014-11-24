@@ -26,3 +26,5 @@ print get_recipe(lst)
 print get_clean_recipe(lst)
 print get_ingredients(title)
 print get_link(title)
+
+print get_full_info(lst)

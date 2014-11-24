@@ -13,3 +13,5 @@ Usage
 
 `query(name=None,ingredients=None,page=None)` return the result of the search.
 Ingredient can be send either as a string like 'ingredient1, ingredient2,...' or as a list of ingredient.
+
+`get_full_info(name=None,ingredients=None,page=None)` return a Recipe object with a name, ingredient and link attribute
