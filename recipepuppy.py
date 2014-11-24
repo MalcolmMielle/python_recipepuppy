@@ -4,7 +4,24 @@
 import requests
 import urllib2
 import urllib
+import string
+import re
 
+def clean():
+    """Contrôle le temps mis par une fonction pour s'exécuter.
+    Si le temps d'exécution est supérieur à nb_secs, on affiche une alerte"""
+    
+    def decorateur(fonction_a_executer):
+        """Notre décorateur. C'est lui qui est appelé directement LORS
+        DE LA DEFINITION de notre fonction (fonction_a_executer)"""
+        
+        def fonction_modifiee(name):
+            """Fonction renvoyée par notre décorateur. Elle se charge
+            de calculer le temps mis par la fonction à s'exécuter"""
+            
+            return fonction_a_executer(name).strip() # On exécute la fonction
+        return fonction_modifiee
+    return decorateur
 	
 #Global search
 def query(name='', ingredient='', page='1'):
@@ -54,3 +71,20 @@ def get_recipe(ingredient):
 def get_link(name):
 	results=query(name)
 	return results["results"][0]["href"]
+
+@clean()
+def get_clean_ingredient(name):
+	results=get_ingredients(name)
+	
+@clean()
+def get_clean_recipe(name):
+	return get_recipe(name)
+
+	
+
+"""Pour gérer le temps, on importe le module time
+On va utiliser surtout la fonction time() de ce module qui renvoie le nombre
+de secondes écoulées depuis le premier janvier 1970 (habituellement).
+On va s'en servir pour calculer le temps mis par notre fonction pour
+s'exécuter"""
+
